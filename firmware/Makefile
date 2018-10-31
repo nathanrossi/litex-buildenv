@@ -127,7 +127,7 @@ version_data.o: $(FIRMBUILD_DIRECTORY)/version_data.h $(FIRMBUILD_DIRECTORY)/ver
 $(FIRMBUILD_DIRECTORY)/version_data.h: version_data
 $(FIRMBUILD_DIRECTORY)/version_data.c: version_data
 version_data:
-	bash $(FIRMWARE_DIRECTORY)/version_data.sh
+	bash $(FIRMWARE_DIRECTORY)/version_data.sh $(FIRMWARE_DIRECTORY)
 	# Check the version files exist
 	[ -e $(FIRMBUILD_DIRECTORY)/version_data.h ]
 	[ -e $(FIRMBUILD_DIRECTORY)/version_data.c ]

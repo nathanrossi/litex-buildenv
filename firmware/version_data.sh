@@ -2,10 +2,12 @@
 
 set -e
 
+REPO=$1
+
 # These must be outside the heredoc below otherwise the script won't error.
-COMMIT="$(git log --format="%H" -n 1)"
-BRANCH="$(git symbolic-ref --short HEAD)"
-DESCRIBE="$(git describe --dirty)"
+COMMIT="$(cd $REPO && git log --format="%H" -n 1)"
+BRANCH="$(cd $REPO && git symbolic-ref --short HEAD)"
+DESCRIBE="$(cd $REPO && git describe --dirty)"
 
 TMPFILE_H=$(tempfile -s .h 2>/dev/null || mktemp --suffix=.h)
 TMPFILE_C=$(tempfile -s .c 2>/dev/null || mktemp --suffix=.c)
@@ -45,7 +47,7 @@ const char* git_branch = "$BRANCH";
 const char* git_describe = "$DESCRIBE";
 const char* git_status =
     "    --\r\n"
-$(git status --short | sed -e's-^-   "    -' -e's-$-\\r\\n"-')
+$(cd $REPO && git status --short | sed -e's-^-   "    -' -e's-$-\\r\\n"-')
     "    --\r\n";
 
 EOF
